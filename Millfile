@@ -1,0 +1,41 @@
+name: dev
+
+up:
+  - env:
+      DEVELOPMENT: "1"
+  - python: 3.10.0
+  - pip: requirements/development.txt
+  - run: npm install -g pyright
+commands:
+  test:
+    description: Run all tests
+    tasks:
+      - run: py.test --cov=dev
+  style:
+    description: Run formatter and linter
+    tasks:
+      - run:
+          - yapf -rip dev
+          - flake8
+  upload:
+    description: Upload package to pypi
+    tasks:
+      - pypi: upload
+  shell:
+    description: Start Python shell
+    tasks:
+      - run: venv/bin/python
+  pip:
+    description: Re-compile requirement files and install them
+    tasks:
+      - run: pip-compile-multi
+      - pip: requirements/development.txt
+  qa:
+    description: Temporarily install working dir globally on this machine
+    tasks:
+      - run:
+          - /opt/dev/venv/bin/pip install --disable-pip-version-check -e .
+          - read -p "You can now test dev in another shell. Press any key when done testing..."
+          - /opt/dev/venv/bin/pip install --disable-pip-version-check -e /opt/dev
+open:
+  actions: https://github.com/MasonData/dev/actions

@@ -1,0 +1,9 @@
+.DS_Store
+.shadowenv.d/
+bin
+dist/
+build/
+__pycache__/
+*.pyc
+*.egg-info/
+.coverage

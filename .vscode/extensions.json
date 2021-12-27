@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "editorconfig.editorconfig",
+        "ms-python.python",
+        "redhat.vscode-yaml",
+        "shopify.vscode-shadowenv",
+        "ms-python.vscode-pylance"
+    ]
+}
