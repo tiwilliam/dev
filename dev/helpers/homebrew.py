@@ -5,6 +5,7 @@ from dev.helpers import run_command
 
 
 class HomebrewHelper:
+
     @staticmethod
     def prefix() -> Optional[str]:
         return run_command('brew --prefix', output=True, silent=True)

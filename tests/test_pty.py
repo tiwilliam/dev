@@ -16,8 +16,8 @@ TEST_STRING_1 = b"I wish to buy a fish license.\n"
 TEST_STRING_2 = b"For my pet fish, Eric.\n"
 
 try:
-    _TIOCGWINSZ = tty.TIOCGWINSZ
-    _TIOCSWINSZ = tty.TIOCSWINSZ
+    _TIOCGWINSZ = tty.TIOCGWINSZ  # type: ignore
+    _TIOCSWINSZ = tty.TIOCSWINSZ  # type: ignore
     _HAVE_WINSZ = True
 except AttributeError:
     _HAVE_WINSZ = False
@@ -73,9 +73,9 @@ def _readline(fd):
 def expectedFailureIfStdinIsTTY(fun):
     # avoid isatty()
     try:
-        tty.tcgetattr(pty.STDIN_FILENO)
+        tty.tcgetattr(pty.STDIN_FILENO)  # type: ignore
         return unittest.expectedFailure(fun)
-    except tty.error:
+    except tty.error:  # type: ignore
         ...
     return fun
 
@@ -92,6 +92,7 @@ def _set_term_winsz(fd, winsz):
 # Marginal testing of pty suite. Cannot do extensive 'do or fail' testing
 # because pty code is not too portable.
 class PtyTest(unittest.TestCase):
+
     def setUp(self):
         old_alarm = signal.signal(signal.SIGALRM, self.handle_sig)
         self.addCleanup(signal.signal, signal.SIGALRM, old_alarm)
@@ -192,11 +193,12 @@ class PtyTest(unittest.TestCase):
                 self.fail("pty.fork() failed for unknown reasons.")
 
     def test_spawn_doesnt_hang(self):
-        pty.spawn([sys.executable, '-c', 'print("hi there")'])
+        pty.spawn((sys.executable, '-c', 'print("hi there")'))
 
 
 class SmallPtyTests(unittest.TestCase):
     """These tests don't spawn children or hang."""
+
     def setUp(self):
         self.orig_stdin_fileno = pty.STDIN_FILENO
         self.orig_stdout_fileno = pty.STDOUT_FILENO
@@ -253,6 +255,7 @@ class SmallPtyTests(unittest.TestCase):
         return self.select_rfds_results.pop(0), [], []
 
     def _make_mock_fork(self, pid):
+
         def mock_fork():
             return (pid, 12)
 
@@ -329,7 +332,7 @@ class SmallPtyTests(unittest.TestCase):
         pty.tcsetattr = self._mock_tcsetattr
         pty.setraw = lambda _: None
 
-        self.assertEqual(pty.spawn([]), status_sentinel, "pty.waitpid process status not returned by pty.spawn")
+        self.assertEqual(pty.spawn(()), status_sentinel, "pty.waitpid process status not returned by pty.spawn")
         self.assertEqual(
             self.tcsetattr_mode_setting, mode_sentinel, "pty.tcsetattr not called with original mode value"
         )

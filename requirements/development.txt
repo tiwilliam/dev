@@ -44,7 +44,7 @@ pytest-cov==3.0.0
     # via -r requirements/development.in
 toml==0.10.2
     # via pytest
-tomli==1.2.2
+tomli==2.0.0
     # via
     #   coverage
     #   pep517
@@ -52,9 +52,9 @@ toposort==1.7
     # via pip-compile-multi
 types-pyyaml==6.0.1
     # via -r requirements/development.in
-wheel==0.37.0
+wheel==0.37.1
     # via pip-tools
-yapf==0.31.0
+yapf==0.32.0
     # via -r requirements/development.in
 
 # The following packages are considered to be unsafe in a requirements file:

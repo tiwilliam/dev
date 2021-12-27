@@ -29,6 +29,9 @@ class Run(Task):
     __description__ = 'Run shell args'
 
     def up(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
+        if not args:
+            return
+
         if isinstance(args, dict):
             env = args.get('env')
             commands_from_args = args['command']

@@ -1,15 +1,16 @@
 from unittest import TestCase
 from unittest.mock import patch
 
-import pytest
 import docopt
+import pytest
 
 from dev.tasks.internal.clone import Clone
 
 
 class TestClone(TestCase):
+
     def setUp(self):
-        Clone.base_path = '/dummy'
+        Clone.base_path = '/dummy'  # type: ignore
 
     def test_up_without_arg(self):
         with pytest.raises(docopt.DocoptExit):

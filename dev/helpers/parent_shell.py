@@ -5,6 +5,7 @@ queue: List[str] = []
 
 
 class ParentShellHelper:
+
     @staticmethod
     def run(command: str) -> None:
         queue.append(command)

@@ -10,6 +10,7 @@ SHADOWENV_CONFIG_DIRECTORY = '.shadowenv.d'
 
 
 def ensure_shadowenv_installed(func: Callable) -> Callable:
+
     def inner(*args: str, **kwargs: str) -> None:
         if HomebrewHelper.install_formula('shadowenv'):
             ShadowenvHelper.install_init_script()
@@ -30,6 +31,7 @@ def append_to_file(filename: str, data: str) -> None:
 
 
 class ShadowenvHelper:
+
     @classmethod
     def install_init_script(cls) -> None:
         home_path = os.environ.get('HOME')

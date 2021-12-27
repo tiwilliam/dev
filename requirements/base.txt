@@ -25,7 +25,7 @@ pyparsing==3.0.6
     # via packaging
 pyyaml==6.0
     # via -r requirements/base.in
-rich==10.14.0
+rich==10.16.1
     # via -r requirements/base.in
-schema==0.7.4
+schema==0.7.5
     # via -r requirements/base.in

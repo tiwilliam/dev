@@ -4,6 +4,7 @@ from typing import Dict, Generator, List, Optional, Tuple, Union
 import yaml
 from schema import Optional as SchemaOptional
 from schema import Or, Schema, SchemaError
+from yaml import parser, scanner
 
 from dev import environment
 from dev.console import error_console
@@ -43,6 +44,7 @@ tasks_definition = Or(
 
 
 class ConfigTask:
+
     def __init__(self, name: str, args: Optional[str]):
         self.name = name
         self.args = args
@@ -80,7 +82,7 @@ class ConfigParser:
             self.devfile = self.load_devfile(filename)
             self.tasks = self.load_tasks()
             environment.set_name(self.devfile.get('name', 'unknown'))
-        except yaml.scanner.ScannerError as e:
+        except scanner.ScannerError as e:
             error_console.print(f'Failed to load {filename}: {e}', style='red')
             sys.exit(1)
         except SchemaError as e:
@@ -98,7 +100,7 @@ class ConfigParser:
 
             self.__schema__.validate(devfile)
             return devfile
-        except yaml.parser.ParserError as e:
+        except parser.ParserError as e:
             error_console.print(f'Failed to parse {filename}: {e}', style='red')
             sys.exit(1)
         except FileNotFoundError:

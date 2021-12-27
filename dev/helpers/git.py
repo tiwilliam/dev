@@ -8,6 +8,7 @@ http_url_pattern = re.compile(r'http(s)?\:\/\/(?P<host>.+)\/(?P<organization>.+)
 
 
 class GitHelper:
+
     @staticmethod
     def setup_config() -> str:
         output = run_command(

@@ -123,6 +123,7 @@ def spawn(
         setraw(STDIN_FILENO)
         restore = True
     except termios.error:  # This is the same as termios.error
+        mode = []
         restore = False
 
     try:

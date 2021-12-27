@@ -17,6 +17,7 @@ org_and_repo_pattern = re.compile(r'[a-zA-Z0-9\-\_\.]+/[a-zA-Z0-9\-\_\.]+')
 
 
 class SearchEntry:
+
     def __init__(self, repository: str, host: Optional[str] = None, organization: Optional[str] = None) -> None:
         self.repository: str = repository
         self.host: Optional[str] = host

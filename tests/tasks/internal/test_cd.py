@@ -9,8 +9,9 @@ from dev.tasks.internal.cd import Cd, SearchEntry
 
 
 class TestCd(TestCase):
+
     def setUp(self):
-        Cd.base_path = '/dummy'
+        Cd.base_path = '/dummy'  # type: ignore
 
     @patch('dev.tasks.internal.cd.IntPrompt')
     @patch('dev.tasks.internal.cd.ParentShellHelper')
@@ -103,7 +104,7 @@ class TestCd(TestCase):
     @patch('dev.tasks.internal.cd.SearchEntry.path')
     def test_up_list_entries(self, path_mock, add_row_mock, int_prompt_mock):
         Cd.git_identifier = ".fakegit"
-        Cd.base_path = os.path.abspath(f'{root_path}/../tests/data/src')
+        Cd.base_path = os.path.abspath(f'{root_path}/../tests/data/src')  # type: ignore
 
         int_prompt_mock.ask.return_value = 1
 
