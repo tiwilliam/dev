@@ -169,3 +169,5 @@ Simply remove your `/opt/dev` directory and any reference in your shell config. 
 ## License
 
 This project is licensed under the terms of the MIT license.
+
+Inspiration for building this tool comes from an internal tool at Shopify. You can read more about it here: https://devproductivity.io/dev-shopifys-all-purpose-development-tool/
