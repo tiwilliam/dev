@@ -176,4 +176,4 @@ class ConfigParser:
         return output
 
 
-config = ConfigParser('devfile')
+config = ConfigParser('Devfile')
