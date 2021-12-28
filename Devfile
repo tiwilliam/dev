@@ -1,8 +1,6 @@
 name: dev
 
 up:
-  - env:
-      DEVELOPMENT: "1"
   - python: 3.10.0
   - pip: requirements/development.txt
   - run: npm install -g pyright

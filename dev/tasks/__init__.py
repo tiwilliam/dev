@@ -11,6 +11,7 @@ from dev.tasks.pip import Pip
 from dev.tasks.pypi import Pypi
 from dev.tasks.python import Python
 from dev.tasks.run import Run
+from dev.tasks.sticky_env import StickyEnv
 
 __all__ = [
     'DockerCompose',
@@ -21,9 +22,10 @@ __all__ = [
     'Hosts',
     'Mkcert',
     'Nginx',
+    'Npm',
     'Pip',
     'Pypi',
     'Python',
     'Run',
-    'Npm',
+    'StickyEnv',
 ]
