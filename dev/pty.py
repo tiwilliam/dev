@@ -107,6 +107,21 @@ def _copy(
                 _writen(master_fd, data)
 
 
+def _set_window_size(fd):
+    try:
+        from fcntl import ioctl
+        from struct import pack
+    except ImportError:
+        return
+
+    strct = pack('HHHH', 0, 0, 0, 0)
+    try:
+        winsz = ioctl(STDIN_FILENO, termios.TIOCGWINSZ, strct)
+        ioctl(fd, termios.TIOCSWINSZ, winsz)
+    except (AttributeError, OSError):
+        pass
+
+
 def spawn(
     argv: Tuple[str, ...],
     master_read: Callable[[int], bytes] = _read,
@@ -117,6 +132,8 @@ def spawn(
     pid, master_fd = fork()
     if pid == CHILD:
         os.execlpe(argv[0], *argv, env)
+
+    _set_window_size(master_fd)
 
     try:
         mode = tcgetattr(STDIN_FILENO)
