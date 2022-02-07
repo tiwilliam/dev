@@ -15,7 +15,7 @@ class Open(InternalTask):
     __schema__ = Schema([str])
     __description__ = 'Open links in your browser'
 
-    builtin_targets: List[str] = ['pr', 'issue']
+    builtin_targets: List[str] = ['gh', 'pr']
 
     def up(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
         if not args or len(args) < 1 or len(args) > 1:
@@ -44,10 +44,10 @@ class Open(InternalTask):
         run_command(f'open {url}')
 
     def handle_builtin(self, target: str) -> None:
-        if target == 'pr':
+        if target == 'gh':
+            self.handle_gh()
+        elif target == 'pr':
             self.handle_pr()
-        elif target == 'issue':
-            self.handle_issue()
 
     def ensure_github_remote(self) -> None:
         remote = GitHelper.get_remote_origin()
@@ -55,6 +55,16 @@ class Open(InternalTask):
             return
         error_console.print('Feature only supported on Github remotes.', style='red')
         sys.exit(1)
+
+    def handle_gh(self) -> None:
+        self.ensure_github_remote()
+
+        components = GitHelper.get_remote_origin()
+        if not components:
+            return
+
+        _, organization, repository = components
+        self.open(f'https://github.com/{organization}/{repository}')
 
     def handle_pr(self) -> None:
         self.ensure_github_remote()
@@ -70,13 +80,3 @@ class Open(InternalTask):
 
         _, organization, repository = components
         self.open(f'https://github.com/{organization}/{repository}/pull/{branch}')
-
-    def handle_issue(self) -> None:
-        self.ensure_github_remote()
-
-        components = GitHelper.get_remote_origin()
-        if not components:
-            return
-
-        _, organization, repository = components
-        self.open(f'https://github.com/{organization}/{repository}/issues/new')

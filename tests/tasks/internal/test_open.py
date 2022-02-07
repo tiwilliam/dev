@@ -1,7 +1,7 @@
-from unittest.mock import patch, call
+from unittest.mock import call, patch
 
-import pytest
 import docopt
+import pytest
 
 from dev.tasks.internal.open import Open
 
@@ -62,25 +62,25 @@ def test_up_pr_on_main_branch(run_command_mock, error_console_mock, git_helper_m
 
 @patch('dev.tasks.internal.open.GitHelper')
 @patch('dev.tasks.internal.open.run_command')
-def test_up_issue(run_command_mock, git_helper_mock):
+def test_up_gh(run_command_mock, git_helper_mock):
     git_helper_mock.current_branch.return_value = 'main'
     git_helper_mock.get_remote_origin.return_value = ('github.com', 'MasonData', 'repo')
 
-    Open(['issue'])
+    Open(['gh'])
 
     run_command_mock.assert_has_calls([
-        call('open https://github.com/MasonData/repo/issues/new'),
+        call('open https://github.com/MasonData/repo'),
     ])
 
 
 @patch('dev.tasks.internal.open.GitHelper')
 @patch('dev.tasks.internal.open.error_console.print')
 @patch('dev.tasks.internal.open.run_command')
-def test_up_issue_on_gitlab(run_command_mock, error_console_mock, git_helper_mock):
+def test_up_gh_on_gitlab(run_command_mock, error_console_mock, git_helper_mock):
     git_helper_mock.get_remote_origin.return_value = ('gitlab.com', 'MasonData', 'repo')
 
     with pytest.raises(SystemExit):
-        Open(['issue'])
+        Open(['gh'])
 
     run_command_mock.assert_not_called()
     error_console_mock.assert_called_once_with('Feature only supported on Github remotes.', style='red')
