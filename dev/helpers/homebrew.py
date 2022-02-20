@@ -12,6 +12,9 @@ class HomebrewHelper:
 
     @classmethod
     def already_installed(cls, formula: str) -> bool:
+        if '/' in formula:
+            # Remove tapped repository from formula name
+            formula = formula.split('/')[-1]
         path = f'{cls.prefix()}/opt/{formula}'
         return os.path.isdir(path)
 
