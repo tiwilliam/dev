@@ -6,6 +6,7 @@ from dev.tasks.homebrew_cask import HomebrewCask
 from dev.tasks.hosts import Hosts
 from dev.tasks.mkcert import Mkcert
 from dev.tasks.nginx import Nginx
+from dev.tasks.node import Node
 from dev.tasks.npm import Npm
 from dev.tasks.pip import Pip
 from dev.tasks.pypi import Pypi
@@ -22,6 +23,7 @@ __all__ = [
     'Hosts',
     'Mkcert',
     'Nginx',
+    'Node',
     'Npm',
     'Pip',
     'Pypi',
