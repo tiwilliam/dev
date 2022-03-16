@@ -38,7 +38,7 @@ class DockerCompose(Task):
         flags = self.flags_from_config(config)
 
         run_command(f'docker-compose {flags} up -d {joined_services}', env=env)
-        version = run_command("docker-compose -v | grep -o '\\d.\\d.\\d'", output=True, silent=True)
+        version = run_command("docker-compose -v | grep -o '\\d\\+.\\d\\+.\\d\\+'", output=True, silent=True)
         ShadowenvHelper.configure_provider("docker-compose", version)
 
     def down(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
