@@ -1,5 +1,6 @@
 import hashlib
 import os
+from typing import Optional
 
 from dev import environment
 from dev.helpers import run_command
@@ -32,7 +33,7 @@ class HashCacheHelper:
         return hash_object.hexdigest()
 
     @classmethod
-    def changed(cls, key: str, data: str = None, filename: str = None) -> bool:
+    def changed(cls, key: str, data: Optional[str] = None, filename: Optional[str] = None) -> bool:
         if filename:
             data = open(filename).read()
         elif not data:

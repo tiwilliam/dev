@@ -12,7 +12,7 @@ from os import close, waitpid
 from select import select
 from termios import tcgetattr, tcsetattr
 from tty import setraw
-from typing import Callable, Tuple
+from typing import Callable, Optional, Tuple
 
 __all__ = ["fork", "spawn", "waitstatus_to_exitcode"]
 
@@ -126,7 +126,7 @@ def spawn(
     argv: Tuple[str, ...],
     master_read: Callable[[int], bytes] = _read,
     stdin_read: Callable[[int], bytes] = _read,
-    env: dict = None
+    env: Optional[dict] = None
 ) -> int:
     """Create a spawned process."""
     pid, master_fd = fork()

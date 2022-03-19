@@ -3,13 +3,14 @@ from typing import Optional as TypingOptional
 
 
 class Schema:
+
     def __init__(
         self,
         schema: Any,
-        error: str = None,
+        error: str | None = None,
         ignore_extra_keys: bool = False,
-        name: str = None,
-        description: str = None,
+        name: str | None = None,
+        description: str | None = None,
         as_reference: bool = False,
     ) -> None:
         ...
@@ -19,16 +20,19 @@ class Schema:
 
 
 class Optional:
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         ...
 
 
 class And:
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         ...
 
 
 class Or(And):
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         ...
 
