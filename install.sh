@@ -64,7 +64,7 @@ function install_in_shell() {
 
     if [ "$SHELL" == "zsh" ]; then
         if [ -f "$HOME/.zprofile" ]; then
-            shell_config="$HOME/.zshrc"
+            shell_config="$HOME/.zprofile"
         else
             shell_config="$HOME/.zshrc"
         fi
