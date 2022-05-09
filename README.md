@@ -2,7 +2,7 @@
 
 [![Continous integration](https://github.com/MasonData/dev/actions/workflows/ci.yml/badge.svg)](https://github.com/MasonData/dev/actions/workflows/ci.yml)
 
-Dev is a Makefile replacement for modern development environments. Dev let's you manage cloned repositories, setup or teardown environments, execute commands, open pull requests and more. Dev is currently only supported on macOS.
+Dev is a Makefile replacement for modern development environments. Dev let's you manage cloned repositories, setup or teardown environments, execute commands, open pull requests and more. Dev is currently only supported on macOS with shell support for bash and zsh.
 
 ## Installation
 
@@ -102,19 +102,26 @@ You can list all tasks available to Dev using the `--tasks` flag. This will list
 
 ```
 $ dev --tasks
-                            Tasks
-┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Task                ┃ Description                          ┃
-┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ docker_compose      │ Manage docker-compose                │
-│ docker_compose_exec │ Run shell commands in docker-compose │
-│ homebrew            │ Install formulas on macOS            │
-│ homebrew_cask       │ Install cask formulas on macOS       │
-│ python              │ Install a specific Python version    │
-│ run                 │ Run shell commands                   │
-│ pip                 │ Run pip install                      │
-│ pypi                │ Manage packages on PyPi              │
-└─────────────────────┴──────────────────────────────────────┘
+                             Tasks
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Task                ┃ Description                           ┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ docker_compose      │ Manage docker-compose                 │
+│ docker_compose_exec │ Run shell commands in docker-compose  │
+│ env                 │ Set env variables for current command │
+│ homebrew            │ Install formulas on macOS             │
+│ homebrew_cask       │ Install cask formulas on macOS        │
+│ hosts               │ Configure hosts file                  │
+│ mkcert              │ Generate self-signed certificates     │
+│ nginx               │ Configure and control nginx           │
+│ node                │ Install a specific Node version       │
+│ npm                 │ Run npm install -g                    │
+│ pip                 │ Run pip install                       │
+│ pypi                │ Manage packages on PyPi               │
+│ python              │ Install a specific Python version     │
+│ run                 │ Run shell args                        │
+│ sticky_env          │ Set env variables in project shell    │
+└─────────────────────┴───────────────────────────────────────┘
 ```
 
 ## Custom tasks
