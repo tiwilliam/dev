@@ -1,8 +1,9 @@
 create_pipe() {
     fifo=$(mktemp -t sh.XXXXX)
+    rm -f $fifo
 
-    exec {DEV_SHELL_RFD}< $fifo
     exec {DEV_SHELL_WFD}> $fifo
+    exec {DEV_SHELL_RFD}< $fifo
 
     rm -f $fifo
 }
