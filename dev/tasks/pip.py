@@ -13,7 +13,7 @@ class Pip(Task):
     __schema__ = Schema(Or(None, str, [str]))
     __description__ = 'Run pip install'
 
-    pip_flags = '--disable-pip-version-check'
+    pip_flags = '--disable-pip-version-check -q'
 
     def up(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
         if args is None:
