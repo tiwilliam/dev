@@ -24,7 +24,7 @@ from docopt import docopt
 
 from dev.config import config
 from dev.console import console, error_console
-from dev.exceptions import CommandNotFoundError, NonZeroReturnCodeError, TaskNotFoundError
+from dev.exceptions import (CommandNotFoundError, NonZeroReturnCodeError, TaskNotFoundError)
 from dev.helpers import load_local_taks, task_to_class
 from dev.helpers.parent_shell import ParentShellHelper
 from dev.tasks.internal import HelpCommand, HelpTask

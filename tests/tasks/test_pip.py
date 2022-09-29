@@ -10,7 +10,7 @@ def test_up(run_command_mock):
     Pip('requirements/base.txt', extra_args=[])
 
     run_command_mock.assert_has_calls([
-        call('pip --disable-pip-version-check install -r requirements/base.txt'),
+        call('pip --disable-pip-version-check -q install -r requirements/base.txt'),
     ])
 
 
@@ -19,8 +19,8 @@ def test_up_list(run_command_mock):
     Pip(['requirements/base.txt', 'requirements/development.txt'], extra_args=[])
 
     run_command_mock.assert_has_calls([
-        call('pip --disable-pip-version-check install -r requirements/base.txt'),
-        call('pip --disable-pip-version-check install -r requirements/development.txt'),
+        call('pip --disable-pip-version-check -q install -r requirements/base.txt'),
+        call('pip --disable-pip-version-check -q install -r requirements/development.txt'),
     ])
 
 
@@ -32,7 +32,7 @@ def test_up_default(run_command_mock, path_exists_mock):
     Pip(None, extra_args=[])
 
     run_command_mock.assert_has_calls([
-        call('pip --disable-pip-version-check install -r requirements.txt'),
+        call('pip --disable-pip-version-check -q install -r requirements.txt'),
     ])
 
 
@@ -51,5 +51,5 @@ def test_up_with_package(run_command_mock):
     Pip('pytest', extra_args=[])
 
     run_command_mock.assert_has_calls([
-        call('pip --disable-pip-version-check install pytest'),
+        call('pip --disable-pip-version-check -q install pytest'),
     ])
