@@ -34,11 +34,8 @@ class Mkcert(Task):
         crt = args['crt']
         joined_names = ' '.join(args['names'])
 
-        if (
-            os.path.exists(key) and
-            os.path.exists(crt) and
-            not HashCacheHelper.changed(environment.name + key + crt, joined_names)
-        ):
+        if (os.path.exists(key) and os.path.exists(crt)
+                and not HashCacheHelper.changed(environment.name + key + crt, joined_names)):
             return
 
         try:
