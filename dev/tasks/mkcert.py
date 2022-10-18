@@ -3,8 +3,10 @@ from typing import Any, Optional
 
 from schema import Schema
 
+from dev import environment, helpers
 from dev.console import console
 from dev.helpers import run_command
+from dev.helpers.hash_cache import HashCacheHelper
 from dev.helpers.homebrew import HomebrewHelper
 from dev.task import Task
 
@@ -31,8 +33,13 @@ class Mkcert(Task):
         key = args['key']
         crt = args['crt']
         joined_names = ' '.join(args['names'])
+        current_repo = os.path.basename(os.path.normpath(environment.env['WORKON_HOME']))
 
-        if os.path.exists(key) and os.path.exists(crt):
+        if (
+            os.path.exists(key) and
+            os.path.exists(crt) and
+            not HashCacheHelper.changed(current_repo + key, joined_names)
+        ):
             return
 
         try:
