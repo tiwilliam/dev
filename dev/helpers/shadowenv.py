@@ -1,5 +1,5 @@
 import os
-from typing import Callable, Dict, Optional
+from typing import Callable, Dict, List, Optional
 
 from dev.console import console
 from dev.helpers import current_shell, run_command
@@ -58,7 +58,7 @@ class ShadowenvHelper:
         provider: str,
         provider_version: str,
         provider_path: Optional[str] = None,
-        env_names: list[str] = ['PROVIDER_PATH']
+        env_names: List[str] = ['PROVIDER_PATH']
     ) -> None:
         with open(f'{SHADOWENV_CONFIG_DIRECTORY}/500_{provider}.lisp', 'w+') as fp:
             fp.write(f'(provide "{provider}" "{provider_version}")\n')
