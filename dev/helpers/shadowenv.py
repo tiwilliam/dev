@@ -1,5 +1,5 @@
 import os
-from typing import Callable, Dict, Optional
+from typing import Callable, Dict, List, Optional
 
 from dev.console import console
 from dev.helpers import current_shell, run_command
@@ -58,13 +58,14 @@ class ShadowenvHelper:
         provider: str,
         provider_version: str,
         provider_path: Optional[str] = None,
-        env_name: str = 'PROVIDER_PATH'
+        env_names: List[str] = ['PROVIDER_PATH']
     ) -> None:
         with open(f'{SHADOWENV_CONFIG_DIRECTORY}/500_{provider}.lisp', 'w+') as fp:
             fp.write(f'(provide "{provider}" "{provider_version}")\n')
-            if provider_path:
-                fp.write(f'(env/set "{env_name}" "{provider_path}")\n')
-                fp.write(f'(env/prepend-to-pathlist "PATH" (path-concat (env/get "{env_name}") "bin"))\n')
+            if provider_path and len(env_names) > 0:
+                for env_name in env_names:
+                    fp.write(f'(env/set "{env_name}" "{provider_path}")\n')
+                fp.write(f'(env/prepend-to-pathlist "PATH" (path-concat (env/get "{env_names[0]}") "bin"))\n')
 
     @classmethod
     @ensure_shadowenv_installed
