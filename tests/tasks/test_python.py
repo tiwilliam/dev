@@ -20,7 +20,10 @@ def test_up(configure_provider_mock, install_formula_mock, run_command_mock):
         call("pyenv exec python -m venv /dummy/versions/3.10.0/virtualenvs/dev"),
     ])
     configure_provider_mock.assert_called_once_with(
-        'python', '3.10.0', PosixPath('/dummy/versions/3.10.0/virtualenvs/dev'), env_name='WORKON_HOME'
+        'python',
+        '3.10.0',
+        PosixPath('/dummy/versions/3.10.0/virtualenvs/dev'),
+        env_names=['WORKON_HOME', 'VIRTUAL_ENV']
     )
 
 
@@ -42,7 +45,10 @@ def test_up_already_installed(
     install_formula_mock.assert_called_once_with('pyenv')
     run_command_mock.assert_called_once_with('pyenv root', output=True, silent=True)
     configure_provider_mock.assert_called_once_with(
-        'python', '3.10.0', PosixPath('/dummy/versions/3.10.0/virtualenvs/dev'), env_name='WORKON_HOME'
+        'python',
+        '3.10.0',
+        PosixPath('/dummy/versions/3.10.0/virtualenvs/dev'),
+        env_names=['WORKON_HOME', 'VIRTUAL_ENV']
     )
 
 

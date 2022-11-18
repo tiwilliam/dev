@@ -31,7 +31,12 @@ class Python(Task):
         self.install_python(version)
         self.create_virtualenv(version)
 
-        ShadowenvHelper.configure_provider("python", version, self.virtualenv_path, env_name='WORKON_HOME')
+        ShadowenvHelper.configure_provider(
+            "python",
+            version,
+            self.virtualenv_path,
+            env_names=['WORKON_HOME', 'VIRTUAL_ENV'],
+        )
 
     def down(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
         if not args:

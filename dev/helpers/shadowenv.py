@@ -58,13 +58,14 @@ class ShadowenvHelper:
         provider: str,
         provider_version: str,
         provider_path: Optional[str] = None,
-        env_name: str = 'PROVIDER_PATH'
+        env_names: list[str] = ['PROVIDER_PATH']
     ) -> None:
         with open(f'{SHADOWENV_CONFIG_DIRECTORY}/500_{provider}.lisp', 'w+') as fp:
             fp.write(f'(provide "{provider}" "{provider_version}")\n')
             if provider_path:
-                fp.write(f'(env/set "{env_name}" "{provider_path}")\n')
-                fp.write(f'(env/prepend-to-pathlist "PATH" (path-concat (env/get "{env_name}") "bin"))\n')
+                for env_name in env_names:
+                    fp.write(f'(env/set "{env_name}" "{provider_path}")\n')
+                    fp.write(f'(env/prepend-to-pathlist "PATH" (path-concat (env/get "{env_name}") "bin"))\n')
 
     @classmethod
     @ensure_shadowenv_installed
