@@ -23,6 +23,7 @@ class Mkcert(Task):
         if not args:
             return
 
+        HomebrewHelper.install_formula('nss')
         HomebrewHelper.install_formula('mkcert')
         run_command('mkcert -install', silent=True)
 
