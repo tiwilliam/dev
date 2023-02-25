@@ -18,6 +18,7 @@ Dev commands are defined in a `Devfile`, it maps a command to pre-defined tasks.
 
 ```yaml
 name: dev
+version: 1
 
 up:
     - python: 3.10.0
@@ -148,6 +149,7 @@ Dev provides a handful of common and useful tasks by default, but you might want
 
     ```
     name: project
+    version: 1
 
     up:
         - custom_task
