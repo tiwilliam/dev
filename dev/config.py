@@ -44,7 +44,6 @@ tasks_definition = Or(
 
 
 class ConfigTask:
-
     def __init__(self, name: str, args: Optional[str]):
         self.name = name
         self.args = args

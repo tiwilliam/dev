@@ -24,7 +24,9 @@ def camel_to_snake(word: str) -> str:
 def task_to_class(task_name: str) -> Callable:
     try:
         if f'dev.tasks.internal.{task_name}' in sys.modules:
-            return getattr(sys.modules[f'dev.tasks.internal.{task_name}'], snake_to_camel(task_name))
+            return getattr(
+                sys.modules[f'dev.tasks.internal.{task_name}'], snake_to_camel(task_name)
+            )
         return getattr(sys.modules[f'dev.tasks.{task_name}'], snake_to_camel(task_name))
     except KeyError:
         raise TaskNotFoundError(task_name)
@@ -43,7 +45,7 @@ def run_command(
     sudo: bool = False,
     wrap_sudo_in_shell: bool = True,
     ok_exit_codes: List[int] = [0],
-    env: Optional[dict] = None
+    env: Optional[dict] = None,
 ) -> Optional[str]:
     all_env = environment.env
 
@@ -60,7 +62,7 @@ def run_command(
             sudo=sudo,
             wrap_sudo_in_shell=wrap_sudo_in_shell,
             ok_exit_codes=ok_exit_codes,
-            env=all_env
+            env=all_env,
         )
 
     return pty_spawn(command, output=output, ok_exit_codes=ok_exit_codes, env=all_env)

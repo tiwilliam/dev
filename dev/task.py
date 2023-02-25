@@ -12,7 +12,9 @@ class BaseTask:
     __schema__: Optional[Schema] = None
     __description__: Optional[str] = None
 
-    def __init__(self, args: Optional[Any] = None, extra_args: Optional[Any] = None, direction: str = 'up') -> None:
+    def __init__(
+        self, args: Optional[Any] = None, extra_args: Optional[Any] = None, direction: str = 'up'
+    ) -> None:
         self.task_name = self.__class__.__name__
         self.validate(args)
         self.run_and_catch(args, extra_args, direction)

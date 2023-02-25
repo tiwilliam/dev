@@ -11,52 +11,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  yapf:
-    name: Verify yapf
+  black:
+    name: Verify black
     runs-on: ubuntu-latest
-    container: python:3.10
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version-file: ".python-version"
       - name: Python dependencies
-        run: |
-          python -m venv venv
-          venv/bin/pip install -r requirements/development.txt
-      - name: Verify yapf
-        run: venv/bin/yapf --recursive --diff dev
-  flake8:
-    name: Verify flake8
+        run: pip install -r requirements/development.txt
+      - name: Verify black
+        run: black --line-length=100 --skip-string-normalization --check .
+  ruff:
+    name: Verify ruff
     runs-on: ubuntu-latest
-    container: python:3.10
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version-file: ".python-version"
       - name: Python dependencies
-        run: |
-          python -m venv venv
-          venv/bin/pip install -r requirements/development.txt
-      - name: Verify flake8
-        run: venv/bin/flake8
-  pip-compile-multi:
-    name: Verify pip-compile-multi
-    runs-on: ubuntu-latest
-    container: python:3.10
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Python dependencies
-        run: |
-          python -m venv venv
-          venv/bin/pip install -r requirements/development.txt
-      - name: Verify pip-compile-multi
-        run: venv/bin/pip-compile-multi verify
+        run: pip install -r requirements/development.txt
+      - name: Verify ruff
+        run: ruff .
   test:
     name: Run tests
     runs-on: ubuntu-latest
-    container: python:3.10
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -66,8 +52,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: "x64"
       - name: Python ${{ matrix.python-version }} dependencies
-        run: |
-          python -m venv venv
-          venv/bin/pip install -r requirements/development.txt
+        run: pip install -r requirements/development.txt
       - name: Python ${{ matrix.python-version }} tests
-        run: venv/bin/py.test --cov=dev
+        run: py.test --cov=dev

@@ -10,7 +10,6 @@ SHADOWENV_CONFIG_DIRECTORY = '.shadowenv.d'
 
 
 def ensure_shadowenv_installed(func: Callable) -> Callable:
-
     def inner(*args: str, **kwargs: str) -> None:
         if HomebrewHelper.install_formula('shadowenv'):
             ShadowenvHelper.install_init_script()
@@ -31,7 +30,6 @@ def append_to_file(filename: str, data: str) -> None:
 
 
 class ShadowenvHelper:
-
     @classmethod
     def install_init_script(cls) -> None:
         home_path = os.environ.get('HOME')
@@ -40,7 +38,7 @@ class ShadowenvHelper:
                 'Could not find HOME environment variable:',
                 'Failed to install shadowenv, set it up manually:',
                 'https://shopify.github.io/shadowenv/getting-started/#add-to-your-shell-profile',
-                style='red'
+                style='red',
             )
             return
         shell = current_shell()
@@ -58,14 +56,16 @@ class ShadowenvHelper:
         provider: str,
         provider_version: str,
         provider_path: Optional[str] = None,
-        env_names: List[str] = ['PROVIDER_PATH']
+        env_names: List[str] = ['PROVIDER_PATH'],
     ) -> None:
         with open(f'{SHADOWENV_CONFIG_DIRECTORY}/500_{provider}.lisp', 'w+') as fp:
             fp.write(f'(provide "{provider}" "{provider_version}")\n')
             if provider_path and len(env_names) > 0:
                 for env_name in env_names:
                     fp.write(f'(env/set "{env_name}" "{provider_path}")\n')
-                fp.write(f'(env/prepend-to-pathlist "PATH" (path-concat (env/get "{env_names[0]}") "bin"))\n')
+                fp.write(
+                    f'(env/prepend-to-pathlist "PATH" (path-concat (env/get "{env_names[0]}") "bin"))\n'
+                )
 
     @classmethod
     @ensure_shadowenv_installed

@@ -1,5 +1,5 @@
 import sys
-from unittest.mock import patch, call
+from unittest.mock import call, patch
 
 import pytest
 
@@ -33,10 +33,12 @@ def test_list_commands(command_table_mock, console_print_mock):
     with pytest.raises(SystemExit):
         main(args=docopt_args({'--commands': True}))
 
-    console_print_mock.assert_has_calls([
-        call(command_table_mock()),
-        call(command_table_mock()),
-    ])
+    console_print_mock.assert_has_calls(
+        [
+            call(command_table_mock()),
+            call(command_table_mock()),
+        ]
+    )
 
 
 @patch('dev.console.console.print')
@@ -44,10 +46,12 @@ def test_list_commands(command_table_mock, console_print_mock):
 def test_missing_command(command_table_mock, console_print_mock):
     main(args=docopt_args({'<command>': 'blah'}))
 
-    console_print_mock.assert_has_calls([
-        call('Could not find command [b]blah', style='red'),
-        call(command_table_mock()),
-    ])
+    console_print_mock.assert_has_calls(
+        [
+            call('Could not find command [b]blah', style='red'),
+            call(command_table_mock()),
+        ]
+    )
 
 
 @patch('dev.cli.config.resolve_tasks')

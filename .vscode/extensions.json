@@ -2,8 +2,9 @@
     "recommendations": [
         "editorconfig.editorconfig",
         "ms-python.python",
+        "ms-python.vscode-pylance",
         "redhat.vscode-yaml",
         "shopify.vscode-shadowenv",
-        "ms-python.vscode-pylance"
+        "charliermarsh.ruff"
     ]
 }

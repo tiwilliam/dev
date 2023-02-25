@@ -34,7 +34,7 @@ class Open(InternalTask):
             error_console.print(
                 f'No URL configured for [b]{target}[/].',
                 f'Valid targets are [b]{joined_valid_values}[/].',
-                style='red'
+                style='red',
             )
             sys.exit(1)
 

@@ -1,9 +1,9 @@
 -r base.in
 
-flake8
-isort
-pip-compile-multi
-pytest
-pytest-cov
-types-PyYAML
-yapf
+ruff==0.0.252
+pip-tools==6.12.2
+pytest==7.2.1
+pytest-cov==4.0.0
+types-PyYAML==6.0.12.8
+black==23.1.0
+unify==0.5

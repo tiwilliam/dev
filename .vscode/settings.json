@@ -1,11 +1,27 @@
 {
+    "editor.formatOnPaste": false,
     "editor.formatOnSave": true,
+    "editor.formatOnType": false,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
     "python.analysis.diagnosticMode": "workspace",
     "python.analysis.typeCheckingMode": "basic",
     "python.analysis.useLibraryCodeForTypes": false,
     "python.analysis.stubPath": "stubs",
     "python.defaultInterpreterPath": "${env:WORKON_HOME}/bin/python",
-    "python.formatting.provider": "yapf",
+    "python.formatting.blackPath": "scripts/black_and_unify.sh",
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length=100"
+    ],
+    "files.exclude": {
+        ".coverage": true,
+        ".pytest_cache": true,
+        ".ruff_cache": true,
+        ".shadowenv.d": true,
+        "**/__pycache__": true,
+        "htmlcov": true,
+    },
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.linting.mypyEnabled": false,

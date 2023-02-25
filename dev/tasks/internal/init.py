@@ -22,7 +22,9 @@ class Init(InternalTask):
 
         if shell not in supported_shells:
             supported = ', '.join(supported_shells)
-            error_console.print(f'Could not init shell [b]{shell}[/]. Supported shells: {supported}', style='red')
+            error_console.print(
+                f'Could not init shell [b]{shell}[/]. Supported shells: {supported}', style='red'
+            )
             sys.exit(1)
 
         with open(f'{root_path}/data/dev-init-{shell}.sh', 'r') as fp:

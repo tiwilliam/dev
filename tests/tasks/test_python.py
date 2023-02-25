@@ -13,17 +13,19 @@ def test_up(configure_provider_mock, install_formula_mock, run_command_mock):
     Python('3.10.0', extra_args=[])
 
     install_formula_mock.assert_called_once_with('pyenv')
-    run_command_mock.assert_has_calls([
-        call('pyenv root', output=True, silent=True),
-        call('pyenv install --skip-existing 3.10.0'),
-        call('pyenv local 3.10.0'),
-        call("pyenv exec python -m venv /dummy/versions/3.10.0/virtualenvs/dev"),
-    ])
+    run_command_mock.assert_has_calls(
+        [
+            call('pyenv root', output=True, silent=True),
+            call('pyenv install --skip-existing 3.10.0'),
+            call('pyenv local 3.10.0'),
+            call("pyenv exec python -m venv /dummy/versions/3.10.0/virtualenvs/dev"),
+        ]
+    )
     configure_provider_mock.assert_called_once_with(
         'python',
         '3.10.0',
         PosixPath('/dummy/versions/3.10.0/virtualenvs/dev'),
-        env_names=['WORKON_HOME', 'VIRTUAL_ENV']
+        env_names=['WORKON_HOME', 'VIRTUAL_ENV'],
     )
 
 
@@ -33,8 +35,11 @@ def test_up(configure_provider_mock, install_formula_mock, run_command_mock):
 @patch('dev.tasks.python.HomebrewHelper.install_formula')
 @patch('dev.tasks.python.ShadowenvHelper.configure_provider')
 def test_up_already_installed(
-    configure_provider_mock, install_formula_mock, run_command_mock, virtualenv_already_created_mock,
-    python_already_installed_mock
+    configure_provider_mock,
+    install_formula_mock,
+    run_command_mock,
+    virtualenv_already_created_mock,
+    python_already_installed_mock,
 ):
     run_command_mock.return_value = '/dummy'
     python_already_installed_mock.return_value = True
@@ -48,7 +53,7 @@ def test_up_already_installed(
         'python',
         '3.10.0',
         PosixPath('/dummy/versions/3.10.0/virtualenvs/dev'),
-        env_names=['WORKON_HOME', 'VIRTUAL_ENV']
+        env_names=['WORKON_HOME', 'VIRTUAL_ENV'],
     )
 
 
@@ -60,7 +65,9 @@ def test_down(run_command_mock, virtualenv_already_created_mock):
 
     Python('3.10.0', extra_args=[], direction='down')
 
-    run_command_mock.assert_has_calls([
-        call('pyenv root', output=True, silent=True),
-        call('rm -rf /dummy/versions/3.10.0/virtualenvs/dev'),
-    ])
+    run_command_mock.assert_has_calls(
+        [
+            call('pyenv root', output=True, silent=True),
+            call('rm -rf /dummy/versions/3.10.0/virtualenvs/dev'),
+        ]
+    )
