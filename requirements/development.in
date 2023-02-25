@@ -1,7 +1,6 @@
 -r base.in
 
 ruff==0.0.252
-isort==5.12.0
 pip-tools==6.12.2
 pytest==7.2.1
 pytest-cov==4.0.0
