@@ -16,7 +16,8 @@ class DockerCompose(Task):
             {
                 SchemaOptional('service'): Or(str, list),
                 SchemaOptional('env'): {str: str},
-                'config': Or(
+                SchemaOptional('remove_orphans'): bool,
+                SchemaOptional('config'): Or(
                     # - docker_compose:
                     #     config: docker-compose.yml
                     str,
@@ -32,24 +33,27 @@ class DockerCompose(Task):
     )
     __description__ = 'Manage docker-compose'
 
-    def up(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
+    def up(self, args: Optional[dict], extra_args: Optional[Any]) -> None:
         config, service, env = self.parse_args(args)
         joined_services = ' '.join(service)
         flags = self.flags_from_config(config)
 
-        run_command(f'docker-compose {flags} up -d {joined_services}', env=env)
+        run_command(f'docker-compose {flags} up -d {joined_services}'.strip(), env=env)
         version = run_command(
             "docker-compose -v | grep -o '\\d\\+.\\d\\+.\\d\\+'", output=True, silent=True
         )
-        ShadowenvHelper.configure_provider("docker-compose", version)
+        ShadowenvHelper.configure_provider('docker-compose', version)
 
-    def down(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
+    def down(self, args: Optional[dict], extra_args: Optional[Any]) -> None:
         config, service, env = self.parse_args(args)
         joined_services = ' '.join(service)
-        flags = self.flags_from_config(config)
 
-        run_command(f'docker-compose {flags} down {joined_services}', env=env)
-        ShadowenvHelper.unconfigure_provider("docker-compose")
+        flags = self.flags_from_config(config)
+        down_flags = '--remove-orphans' if args and args.get('remove_orphans') else ''
+
+        extra = ' '.join([down_flags, joined_services]).strip()
+        run_command(f'docker-compose {flags} down {extra}'.strip(), env=env)
+        ShadowenvHelper.unconfigure_provider('docker-compose')
 
     def parse_args(self, args: Optional[dict]) -> Tuple[List[str], List[str], Dict[str, str]]:
         if args is None:
