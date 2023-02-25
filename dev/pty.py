@@ -76,7 +76,9 @@ def _read(fd: int) -> bytes:
 
 
 def _copy(
-    master_fd: int, master_read: Callable[[int], bytes] = _read, stdin_read: Callable[[int], bytes] = _read
+    master_fd: int,
+    master_read: Callable[[int], bytes] = _read,
+    stdin_read: Callable[[int], bytes] = _read,
 ) -> None:
     """Parent copy loop.
     Copies
@@ -126,7 +128,7 @@ def spawn(
     argv: Tuple[str, ...],
     master_read: Callable[[int], bytes] = _read,
     stdin_read: Callable[[int], bytes] = _read,
-    env: Optional[dict] = None
+    env: Optional[dict] = None,
 ) -> int:
     """Create a spawned process."""
     pid, master_fd = fork()

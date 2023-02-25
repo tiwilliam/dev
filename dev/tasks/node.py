@@ -7,7 +7,11 @@ from schema import Schema
 from dev import environment
 from dev.helpers import run_command
 from dev.helpers.homebrew import HomebrewHelper
-from dev.helpers.shadowenv import (SHADOWENV_CONFIG_DIRECTORY, ShadowenvHelper, ensure_shadowenv_installed)
+from dev.helpers.shadowenv import (
+    SHADOWENV_CONFIG_DIRECTORY,
+    ShadowenvHelper,
+    ensure_shadowenv_installed,
+)
 from dev.task import Task
 
 
@@ -64,4 +68,6 @@ class Node(Task):
     def add_node_modules_bin_to_path(cls) -> None:
         with open(f'{SHADOWENV_CONFIG_DIRECTORY}/600_node_modules.lisp', 'w+') as fp:
             fp.write('(env/set "NODE_MODULES_PATH" "node_modules")\n')
-            fp.write('(env/prepend-to-pathlist "PATH" (path-concat (env/get "NODE_MODULES_PATH") ".bin"))\n')
+            fp.write(
+                '(env/prepend-to-pathlist "PATH" (path-concat (env/get "NODE_MODULES_PATH") ".bin"))\n'
+            )

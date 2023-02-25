@@ -17,8 +17,9 @@ org_and_repo_pattern = re.compile(r'[a-zA-Z0-9\-\_\.]+/[a-zA-Z0-9\-\_\.]+')
 
 
 class SearchEntry:
-
-    def __init__(self, repository: str, host: Optional[str] = None, organization: Optional[str] = None) -> None:
+    def __init__(
+        self, repository: str, host: Optional[str] = None, organization: Optional[str] = None
+    ) -> None:
         self.repository: str = repository
         self.host: Optional[str] = host
         self.organization: Optional[str] = organization
@@ -42,7 +43,9 @@ class Cd(InternalTask):
         selectable_entries: List[SearchEntry]
         search_entries: List[SearchEntry]
 
-        search_entries = sorted(self.list_entries(self.base_path), key=lambda e: e.repository.lower())
+        search_entries = sorted(
+            self.list_entries(self.base_path), key=lambda e: e.repository.lower()
+        )
 
         if not args or len(args) < 1:
             selectable_entries = search_entries
@@ -52,9 +55,13 @@ class Cd(InternalTask):
             selected_index = 1
             search_pattern = re.compile(f'.*{re.escape(arg)}.*')
 
-            selectable_entries = [entry for entry in search_entries if self.match_search_term(entry, search_pattern)]
+            selectable_entries = [
+                entry for entry in search_entries if self.match_search_term(entry, search_pattern)
+            ]
             if len(selectable_entries) == 0:
-                error_console.print(f'Could not find any repositories matching [b]{arg}[/]', style='red')
+                error_console.print(
+                    f'Could not find any repositories matching [b]{arg}[/]', style='red'
+                )
                 sys.exit(1)
 
             if len(selectable_entries) > 1:
@@ -84,16 +91,17 @@ class Cd(InternalTask):
 
         return selected_index
 
-    def match_search_term(self, entry: SearchEntry, search_pattern: re.Pattern) -> Optional[re.Match]:
+    def match_search_term(
+        self, entry: SearchEntry, search_pattern: re.Pattern
+    ) -> Optional[re.Match]:
         return search_pattern.match(entry.repository)
 
     def is_git_repo(self, path: Path) -> bool:
         return (path / self.git_identifier).is_dir()
 
-    def list_entries(self,
-                     parent: Path,
-                     grand_parent: Optional[Path] = None,
-                     level: int = 0) -> Generator[SearchEntry, None, None]:
+    def list_entries(
+        self, parent: Path, grand_parent: Optional[Path] = None, level: int = 0
+    ) -> Generator[SearchEntry, None, None]:
         level += 1
         for child in Path(parent).iterdir():
             if not child.is_dir():
@@ -124,4 +132,6 @@ class Cd(InternalTask):
                 #       parent_dir = company
                 #        child_dir = repository-name
                 grand_parent_dir = os.path.basename(str(grand_parent))
-                yield SearchEntry(repository=child_dir, host=grand_parent_dir, organization=parent_dir)
+                yield SearchEntry(
+                    repository=child_dir, host=grand_parent_dir, organization=parent_dir
+                )

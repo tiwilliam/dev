@@ -26,6 +26,7 @@ if verbose:
 
     def debug(msg):
         print(msg)
+
 else:
 
     def debug(msg):
@@ -92,7 +93,6 @@ def _set_term_winsz(fd, winsz):
 # Marginal testing of pty suite. Cannot do extensive 'do or fail' testing
 # because pty code is not too portable.
 class PtyTest(unittest.TestCase):
-
     def setUp(self):
         old_alarm = signal.signal(signal.SIGALRM, self.handle_sig)
         self.addCleanup(signal.signal, signal.SIGALRM, old_alarm)
@@ -255,7 +255,6 @@ class SmallPtyTests(unittest.TestCase):
         return self.select_rfds_results.pop(0), [], []
 
     def _make_mock_fork(self, pid):
-
         def mock_fork():
             return (pid, 12)
 
@@ -332,9 +331,13 @@ class SmallPtyTests(unittest.TestCase):
         pty.tcsetattr = self._mock_tcsetattr
         pty.setraw = lambda _: None
 
-        self.assertEqual(pty.spawn(()), status_sentinel, "pty.waitpid process status not returned by pty.spawn")
         self.assertEqual(
-            self.tcsetattr_mode_setting, mode_sentinel, "pty.tcsetattr not called with original mode value"
+            pty.spawn(()), status_sentinel, "pty.waitpid process status not returned by pty.spawn"
+        )
+        self.assertEqual(
+            self.tcsetattr_mode_setting,
+            mode_sentinel,
+            "pty.tcsetattr not called with original mode value",
         )
 
 

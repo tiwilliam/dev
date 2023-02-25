@@ -1,0 +1,5 @@
+[tool.ruff]
+line-length = 100
+ignore = ["E501", "E402"]
+exclude = []
+target-version = "py311"

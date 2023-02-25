@@ -33,7 +33,9 @@ class Pip(Task):
         if not os.path.exists(filename):
             raise TaskError(f'{filename} does not exist')
         run_command(f'pip {self.pip_flags} install -r {filename}')
-        console.print(f'Python dependencies from [b]{filename}[/] installed successfully', style='green')
+        console.print(
+            f'Python dependencies from [b]{filename}[/] installed successfully', style='green'
+        )
 
     def install_package(self, package: str) -> None:
         run_command(f'pip {self.pip_flags} install {package}')

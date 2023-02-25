@@ -10,9 +10,11 @@ from dev.task import Task
 
 
 class Nginx(Task):
-    __schema__ = Schema({
-        'sites': [str],
-    })
+    __schema__ = Schema(
+        {
+            'sites': [str],
+        }
+    )
     __description__ = 'Configure and control nginx'
 
     def up(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
@@ -46,8 +48,12 @@ class Nginx(Task):
             return
 
         with open('/tmp/brew_services_nginx', 'w+') as fp:
-            fp.write(f'%staff ALL=(root) NOPASSWD: {homebrew_prefix}/bin/brew services stop nginx\n')
-            fp.write(f'%staff ALL=(root) NOPASSWD: {homebrew_prefix}/bin/brew services start nginx\n')
+            fp.write(
+                f'%staff ALL=(root) NOPASSWD: {homebrew_prefix}/bin/brew services stop nginx\n'
+            )
+            fp.write(
+                f'%staff ALL=(root) NOPASSWD: {homebrew_prefix}/bin/brew services start nginx\n'
+            )
 
         run_command('chown root /tmp/brew_services_nginx', sudo=True)
         run_command(f'mv /tmp/brew_services_nginx {sudoers_target}', sudo=True)

@@ -28,9 +28,11 @@ def test_up_pr(run_command_mock, git_helper_mock):
 
     Open(['pr'])
 
-    run_command_mock.assert_has_calls([
-        call('open https://github.com/MasonData/repo/pull/feature'),
-    ])
+    run_command_mock.assert_has_calls(
+        [
+            call('open https://github.com/MasonData/repo/pull/feature'),
+        ]
+    )
 
 
 @patch('dev.tasks.internal.open.GitHelper')
@@ -43,7 +45,9 @@ def test_up_pr_on_gitlab(run_command_mock, error_console_mock, git_helper_mock):
         Open(['pr'])
 
     run_command_mock.assert_not_called()
-    error_console_mock.assert_called_once_with('Feature only supported on Github remotes.', style='red')
+    error_console_mock.assert_called_once_with(
+        'Feature only supported on Github remotes.', style='red'
+    )
 
 
 @patch('dev.tasks.internal.open.GitHelper')
@@ -68,9 +72,11 @@ def test_up_gh(run_command_mock, git_helper_mock):
 
     Open(['gh'])
 
-    run_command_mock.assert_has_calls([
-        call('open https://github.com/MasonData/repo'),
-    ])
+    run_command_mock.assert_has_calls(
+        [
+            call('open https://github.com/MasonData/repo'),
+        ]
+    )
 
 
 @patch('dev.tasks.internal.open.GitHelper')
@@ -83,7 +89,9 @@ def test_up_gh_on_gitlab(run_command_mock, error_console_mock, git_helper_mock):
         Open(['gh'])
 
     run_command_mock.assert_not_called()
-    error_console_mock.assert_called_once_with('Feature only supported on Github remotes.', style='red')
+    error_console_mock.assert_called_once_with(
+        'Feature only supported on Github remotes.', style='red'
+    )
 
 
 @patch('dev.tasks.internal.open.run_command')
@@ -97,6 +105,8 @@ def test_up_custom_target(devfile_mock, run_command_mock):
 
     Open(['sierra'])
 
-    run_command_mock.assert_has_calls([
-        call('open https://example.com/sierra'),
-    ])
+    run_command_mock.assert_has_calls(
+        [
+            call('open https://example.com/sierra'),
+        ]
+    )

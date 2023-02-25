@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
-import pytest
 import docopt
+import pytest
 
 from dev.tasks.internal.init import Init
 

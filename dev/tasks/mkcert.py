@@ -12,11 +12,13 @@ from dev.task import Task
 
 
 class Mkcert(Task):
-    __schema__ = Schema({
-        'key': str,
-        'crt': str,
-        'names': [str],
-    })
+    __schema__ = Schema(
+        {
+            'key': str,
+            'crt': str,
+            'names': [str],
+        }
+    )
     __description__ = 'Generate self-signed certificates'
 
     def up(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
@@ -35,8 +37,11 @@ class Mkcert(Task):
         crt = args['crt']
         joined_names = ' '.join(args['names'])
 
-        if (os.path.exists(key) and os.path.exists(crt)
-                and not HashCacheHelper.changed(environment.name + key + crt, joined_names)):
+        if (
+            os.path.exists(key)
+            and os.path.exists(crt)
+            and not HashCacheHelper.changed(environment.name + key + crt, joined_names)
+        ):
             return
 
         try:

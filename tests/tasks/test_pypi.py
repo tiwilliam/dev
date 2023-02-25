@@ -1,5 +1,5 @@
 import os
-from unittest.mock import patch, call
+from unittest.mock import call, patch
 
 import pytest
 
@@ -13,13 +13,15 @@ def test_up(run_command_mock, environ_mock):
 
     Pypi('upload', extra_args=[])
 
-    run_command_mock.assert_has_calls([
-        call('rm -rf dist'),
-        call('pip install --upgrade twine build'),
-        call('python -m build'),
-        call('python -m twine check dist/*'),
-        call('python -m twine upload dist/*'),
-    ])
+    run_command_mock.assert_has_calls(
+        [
+            call('rm -rf dist'),
+            call('pip install --upgrade twine build'),
+            call('python -m build'),
+            call('python -m twine check dist/*'),
+            call('python -m twine upload dist/*'),
+        ]
+    )
 
 
 @patch('dev.task.error_console.print')
@@ -32,7 +34,9 @@ def test_up_missing_command(run_command_mock, environ_mock, console_print_mock):
         Pypi('abc', extra_args=[])
 
     run_command_mock.assert_not_called()
-    console_print_mock.assert_called_once_with('Failed to run [b]Pypi[/] task: Unknown argument [b]abc[/]', style='red')
+    console_print_mock.assert_called_once_with(
+        'Failed to run [b]Pypi[/] task: Unknown argument [b]abc[/]', style='red'
+    )
 
 
 @patch.dict(os.environ, {'TWINE_USERNAME': 'abc'})

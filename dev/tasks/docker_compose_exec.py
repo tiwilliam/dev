@@ -8,11 +8,13 @@ from dev.task import Task
 
 
 class DockerComposeExec(Task):
-    __schema__ = Schema({
-        'container': str,
-        'run': Or(str, [str]),
-        SchemaOptional('env'): {str: str},
-    })
+    __schema__ = Schema(
+        {
+            'container': str,
+            'run': Or(str, [str]),
+            SchemaOptional('env'): {str: str},
+        }
+    )
     __description__ = 'Run shell commands in docker-compose'
 
     def up(self, args: Any, extra_args: Optional[Any]) -> None:

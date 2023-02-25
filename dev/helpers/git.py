@@ -4,15 +4,18 @@ from typing import Optional, Tuple
 from dev.helpers import run_command
 
 git_url_pattern = re.compile(r'git@(?P<host>.+):(?P<organization>.+)\/(?P<repository>.+)\.git')
-http_url_pattern = re.compile(r'http(s)?\:\/\/(?P<host>.+)\/(?P<organization>.+)\/(?P<repository>.+)\.git')
+http_url_pattern = re.compile(
+    r'http(s)?\:\/\/(?P<host>.+)\/(?P<organization>.+)\/(?P<repository>.+)\.git'
+)
 
 
 class GitHelper:
-
     @staticmethod
     def setup_config() -> str:
         output = run_command(
-            'git config --global url."git@github.com:".insteadOf "https://github.com/"', output=True, silent=True
+            'git config --global url."git@github.com:".insteadOf "https://github.com/"',
+            output=True,
+            silent=True,
         )
         assert output is not None
         return output
@@ -25,7 +28,9 @@ class GitHelper:
 
     @staticmethod
     def remote_origin_url() -> str:
-        output = run_command('git config --get remote.origin.url', output=True, silent=True, ok_exit_codes=[0, 1])
+        output = run_command(
+            'git config --get remote.origin.url', output=True, silent=True, ok_exit_codes=[0, 1]
+        )
         assert output is not None
         return output
 
