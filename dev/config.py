@@ -10,6 +10,7 @@ from dev import environment
 from dev.console import error_console
 from dev.exceptions import CommandNotFoundError
 from dev.task import InternalTask
+from dev.version import __version__
 
 # Accepted argument types to tasks, can be nested in list and dict
 arg_definition = Or(str, int, bool, float, list, dict)
@@ -54,10 +55,11 @@ class ConfigTask:
 
 class ConfigParser:
     __schema__ = Schema(
-        Or(
+        schema=Or(
             None,
             {
                 'name': str,
+                'version': int,
                 SchemaOptional('up'): tasks_definition,
                 SchemaOptional('down'): tasks_definition,
                 SchemaOptional('open'): {str: str},
@@ -87,6 +89,17 @@ class ConfigParser:
         except SchemaError as e:
             fancy_error = ' '.join(e.code.split('\n')[-2:])
             error_console.print(f'Failed to validate {filename}: {fancy_error}', style='red')
+            sys.exit(1)
+
+    def check_version(self, version: int) -> None:
+        if __version__ < version:
+            error_console.print(
+                f'Your dev version is too old for this Devfile ({__version__} < {version})',
+                style='yellow',
+            )
+            error_console.print(
+                'Please upgrade dev to the latest version by running: dev update', style='cyan'
+            )
             sys.exit(1)
 
     def load_devfile(self, filename: str) -> dict:
@@ -128,6 +141,9 @@ class ConfigParser:
                 yield command, data.get('description')
 
     def resolve_tasks(self, command: str, extra_args: str) -> Dict[str, List[ConfigTask]]:
+        if command != 'update':
+            self.check_version(self.devfile.get('version', 1))
+
         if command in InternalTask.tasks():
             # Treat internal tasks as commands: dev update -> dev.tasks.internal.update.
             return {'up': [ConfigTask(command, extra_args)]}
