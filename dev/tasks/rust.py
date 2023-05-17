@@ -24,8 +24,7 @@ class Rust(Task):
 
         HomebrewHelper.install_formula('rustup-init')
 
-        self.install_rust(version)
-        self.rust_path = self.get_rust_path(version)
+        run_command(f'rustup default {version}')
         environment.prepend_path(f'{self.rust_path}/bin')
 
         ShadowenvHelper.configure_provider('rust', version, self.rust_path)
@@ -33,9 +32,7 @@ class Rust(Task):
     def down(self, args: Optional[Any], extra_args: Optional[Any]) -> None:
         ...
 
-    def install_rust(self, version: str) -> None:
-        run_command(f'rustup default {version}')
-
-    def get_rust_path(self, version: str) -> Path:
+    @property
+    def rust_path(self) -> Path:
         prefix = run_command('rustc --print sysroot', output=True, silent=True)
         return Path(f'{prefix}/bin')
