@@ -14,6 +14,7 @@ from dev.tasks.pypi import Pypi
 from dev.tasks.python import Python
 from dev.tasks.ruby import Ruby
 from dev.tasks.run import Run
+from dev.tasks.rust import Rust
 from dev.tasks.sticky_env import StickyEnv
 
 __all__ = [
@@ -33,5 +34,6 @@ __all__ = [
     'Python',
     'Ruby',
     'Run',
+    'Rust',
     'StickyEnv',
 ]
