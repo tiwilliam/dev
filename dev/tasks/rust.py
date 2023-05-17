@@ -6,9 +6,7 @@ from schema import Schema
 from dev import environment
 from dev.helpers import run_command
 from dev.helpers.homebrew import HomebrewHelper
-from dev.helpers.shadowenv import (
-    ShadowenvHelper,
-)
+from dev.helpers.shadowenv import ShadowenvHelper
 from dev.task import Task
 
 
