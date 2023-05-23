@@ -23,7 +23,7 @@ class Rust(Task):
         if HomebrewHelper.install_formula('rustup-init'):
             run_command('rustup-init -y')
 
-        run_command(f'rustup default {version}')
+        run_command(f'$HOME/.cargo/bin/rustup default {version}')
         environment.prepend_path(f'{self.rust_path}/bin')
 
         ShadowenvHelper.configure_provider('rust', version, self.rust_path)
