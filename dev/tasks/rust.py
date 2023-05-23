@@ -20,7 +20,8 @@ class Rust(Task):
 
         version = args
 
-        HomebrewHelper.install_formula('rustup-init')
+        if HomebrewHelper.install_formula('rustup-init'):
+            run_command('rustup-init -y')
 
         run_command(f'rustup default {version}')
         environment.prepend_path(f'{self.rust_path}/bin')
