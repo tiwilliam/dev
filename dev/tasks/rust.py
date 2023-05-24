@@ -33,5 +33,5 @@ class Rust(Task):
 
     @property
     def rust_path(self) -> Path:
-        prefix = run_command('rustc --print sysroot', output=True, silent=True)
+        prefix = run_command('$HOME/.cargo/bin/rustc --print sysroot', output=True, silent=True)
         return Path(f'{prefix}/bin')
