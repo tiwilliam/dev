@@ -1,15 +1,15 @@
 # Dev
 
-[![Continous integration](https://github.com/MasonData/dev/actions/workflows/ci.yml/badge.svg)](https://github.com/MasonData/dev/actions/workflows/ci.yml)
+[![Continous integration](https://github.com/tiwilliam/dev/actions/workflows/ci.yml/badge.svg)](https://github.com/tiwilliam/dev/actions/workflows/ci.yml)
 
 Dev is a Makefile replacement for modern development environments. Dev let's you manage cloned repositories, setup or teardown environments, execute commands, open pull requests and more. Dev is currently only supported on macOS with shell support for bash and zsh.
 
 ## Installation
 
-Install dev by running the [installer](https://github.com/MasonData/dev/blob/main/install.sh):
+Install dev by running the [installer](https://github.com/tiwilliam/dev/blob/main/install.sh):
 
 ```
-curl -s https://raw.githubusercontent.com/MasonData/dev/main/install.sh | sh
+curl -s https://raw.githubusercontent.com/tiwilliam/dev/main/install.sh | sh
 ```
 
 ## Getting started
@@ -39,7 +39,7 @@ $ dev test
 => Running command: py.test --color=yes
 ============================= test session starts ==============================
 platform darwin -- Python 3.10.0, pytest-6.2.5, py-1.11.0, pluggy-1.0.0
-rootdir: /Users/alex/src/github.com/MasonData/dev
+rootdir: /Users/alex/src/github.com/tiwilliam/dev
 collected 5 items
 
 tests/test_cli.py .....                                                  [100%]
@@ -52,14 +52,14 @@ tests/test_cli.py .....                                                  [100%]
 Clone and navigate repositores with `clone` and `cd` commands. Clone repositores in a unified way and navigate between them using fuzzy search.
 
 ```
-~/src/github.com/MasonData/dev $ dev clone hookit
-Cloning into '/Users/alex/src/github.com/MasonData/hookit'...
+~/src/github.com/tiwilliam/dev $ dev clone hookit
+Cloning into '/Users/alex/src/github.com/tiwilliam/hookit'...
 remote: Enumerating objects: 153, done.
 remote: Total 153 (delta 0), reused 0 (delta 0), pack-reused 153
 Receiving objects: 100% (153/153), 23.12 KiB | 3.30 MiB/s, done.
 Resolving deltas: 100% (69/69), done.
-~/src/github.com/MasonData/hookit $ dev cd dev
-~/src/github.com/MasonData/dev $
+~/src/github.com/tiwilliam/hookit $ dev cd dev
+~/src/github.com/tiwilliam/dev $
 ```
 
 Helpful fuzzy search for faster repository navigation:
@@ -81,20 +81,20 @@ Dev provide a way to open links related to your project. A new pull request or i
 
 ```
 open:
-    actions: https://github.com/MasonData/dev/actions
+    actions: https://github.com/tiwilliam/dev/actions
 ```
 
 Open links using the `dev open` command:
 
 ```
 $ dev open actions
-=> Running command: open https://github.com/MasonData/dev/actions
+=> Running command: open https://github.com/tiwilliam/dev/actions
 
 $ dev open pr
-=> Running command: open https://github.com/MasonData/dev/pull/open-url
+=> Running command: open https://github.com/tiwilliam/dev/pull/open-url
 
 $ dev open issue
-=> Running command: open https://github.com/MasonData/dev/issues/new
+=> Running command: open https://github.com/tiwilliam/dev/issues/new
 ```
 
 ## Bundled tasks
@@ -179,4 +179,4 @@ Simply remove your `/opt/dev` directory and any reference in your shell config. 
 
 This project is licensed under the terms of the MIT license.
 
-Inspiration for building this tool comes from an internal tool at Shopify. You can read more about it here: https://devproductivity.io/dev-shopifys-all-purpose-development-tool/
+Inspiration for building this tool comes from an internal tool at Shopify.
