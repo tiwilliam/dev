@@ -10,6 +10,7 @@ from dev.tasks.nginx import Nginx
 from dev.tasks.node import Node
 from dev.tasks.npm import Npm
 from dev.tasks.pip import Pip
+from dev.tasks.podman_compose import PodmanCompose
 from dev.tasks.pypi import Pypi
 from dev.tasks.python import Python
 from dev.tasks.ruby import Ruby
@@ -30,6 +31,7 @@ __all__ = [
     'Node',
     'Npm',
     'Pip',
+    'PodmanCompose',
     'Pypi',
     'Python',
     'Ruby',
