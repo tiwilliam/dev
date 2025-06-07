@@ -8,41 +8,41 @@ from dev.helpers.shadowenv import ShadowenvHelper
 from dev.task import Task
 
 
-class DockerCompose(Task):
+class PodmanCompose(Task):
     __schema__ = Schema(
         Or(
-            # - docker_compose
+            # - podman_compose
             None,
             {
                 SchemaOptional('service'): Or(str, list),
                 SchemaOptional('env'): {str: str},
                 SchemaOptional('remove_orphans'): bool,
                 SchemaOptional('config'): Or(
-                    # - docker_compose:
-                    #     config: docker-compose.yaml
+                    # - podman_compose:
+                    #     config: podman-compose.yaml
                     str,
-                    # - docker_compose:
+                    # - podman_compose:
                     #     config:
-                    #       - docker-compose.traefik.yaml
-                    #       - docker-compose.state.yaml
-                    #       - docker-compose.yaml
+                    #       - podman-compose.traefik.yaml
+                    #       - podman-compose.state.yaml
+                    #       - podman-compose.yaml
                     [str],
                 ),
             },
         )
     )
-    __description__ = 'Manage docker-compose'
+    __description__ = 'Manage podman'
 
     def up(self, args: Optional[dict], extra_args: Optional[Any]) -> None:
         config, service, env = self.parse_args(args)
         joined_services = ' '.join(service)
         flags = self.flags_from_config(config)
 
-        run_command(f'docker-compose {flags} up -d {joined_services}'.strip(), env=env)
+        run_command(f'podman compose {flags} up -d {joined_services}'.strip(), env=env)
         version = run_command(
-            "docker-compose -v | grep -o '\\d\\+.\\d\\+.\\d\\+'", output=True, silent=True
+            "podman compose -v | grep -o '\\d\\+.\\d\\+.\\d\\+'", output=True, silent=True
         )
-        ShadowenvHelper.configure_provider('docker-compose', version)
+        ShadowenvHelper.configure_provider('podman', version)
 
     def down(self, args: Optional[dict], extra_args: Optional[Any]) -> None:
         config, service, env = self.parse_args(args)
@@ -52,8 +52,8 @@ class DockerCompose(Task):
         down_flags = '--remove-orphans' if args and args.get('remove_orphans') else ''
 
         extra = ' '.join([down_flags, joined_services]).strip()
-        run_command(f'docker-compose {flags} down {extra}'.strip(), env=env)
-        ShadowenvHelper.unconfigure_provider('docker-compose')
+        run_command(f'podman compose {flags} down {extra}'.strip(), env=env)
+        ShadowenvHelper.unconfigure_provider('podman')
 
     def parse_args(self, args: Optional[dict]) -> Tuple[List[str], List[str], Dict[str, str]]:
         if args is None:

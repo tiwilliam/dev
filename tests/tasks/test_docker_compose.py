@@ -11,17 +11,17 @@ class TestDockerCompose:
         config_provider_mock.assert_called_once_with('docker-compose', run_command_mock())
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f docker-compose.yml up -d', env={}),
+                call('docker-compose -f docker-compose.yaml up -d', env={}),
             ]
         )
 
     @patch('dev.tasks.docker_compose.run_command')
     def test_up_custom_config(self, run_command_mock: Mock, config_provider_mock: Mock):
-        DockerCompose(dict(config='custom.yml'))
+        DockerCompose(dict(config='custom.yaml'))
         config_provider_mock.assert_called_once_with('docker-compose', run_command_mock())
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f custom.yml up -d', env={}),
+                call('docker-compose -f custom.yaml up -d', env={}),
             ]
         )
 
@@ -31,7 +31,7 @@ class TestDockerCompose:
         config_provider_mock.assert_called_once_with('docker-compose', run_command_mock())
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f docker-compose.yml up -d web', env={}),
+                call('docker-compose -f docker-compose.yaml up -d web', env={}),
             ]
         )
 
@@ -41,17 +41,17 @@ class TestDockerCompose:
         config_provider_mock.assert_not_called()
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f docker-compose.yml down web', env={}),
+                call('docker-compose -f docker-compose.yaml down web', env={}),
             ]
         )
 
     @patch('dev.tasks.docker_compose.run_command')
     def test_up_custom_config_list(self, run_command_mock: Mock, config_provider_mock: Mock):
-        DockerCompose(dict(config=['a.yml', 'b.yml']))
+        DockerCompose(dict(config=['a.yaml', 'b.yaml']))
         config_provider_mock.assert_called_once_with('docker-compose', run_command_mock())
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f a.yml -f b.yml up -d', env={}),
+                call('docker-compose -f a.yaml -f b.yaml up -d', env={}),
             ]
         )
 
@@ -59,11 +59,11 @@ class TestDockerCompose:
     def test_up_remove_orphans_with_config(
         self, run_command_mock: Mock, config_provider_mock: Mock
     ):
-        DockerCompose(dict(config='custom.yml', remove_orphans=True))
+        DockerCompose(dict(config='custom.yaml', remove_orphans=True))
         config_provider_mock.assert_called_once_with('docker-compose', run_command_mock())
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f custom.yml up -d', env={}),
+                call('docker-compose -f custom.yaml up -d', env={}),
             ]
         )
 
@@ -73,7 +73,7 @@ class TestDockerCompose:
         config_provider_mock.assert_not_called()
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f docker-compose.yml down', env={}),
+                call('docker-compose -f docker-compose.yaml down', env={}),
             ]
         )
 
@@ -81,11 +81,11 @@ class TestDockerCompose:
     def test_down_remove_orphans_true_with_config(
         self, run_command_mock: Mock, config_provider_mock: Mock
     ):
-        DockerCompose(args=dict(config='custom.yml', remove_orphans=True), direction='down')
+        DockerCompose(args=dict(config='custom.yaml', remove_orphans=True), direction='down')
         config_provider_mock.assert_not_called()
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f custom.yml down --remove-orphans', env={}),
+                call('docker-compose -f custom.yaml down --remove-orphans', env={}),
             ]
         )
 
@@ -93,10 +93,10 @@ class TestDockerCompose:
     def test_down_remove_orphans_false_with_config(
         self, run_command_mock: Mock, config_provider_mock: Mock
     ):
-        DockerCompose(args=dict(config='custom.yml', remove_orphans=False), direction='down')
+        DockerCompose(args=dict(config='custom.yaml', remove_orphans=False), direction='down')
         config_provider_mock.assert_not_called()
         run_command_mock.assert_has_calls(
             [
-                call('docker-compose -f custom.yml down', env={}),
+                call('docker-compose -f custom.yaml down', env={}),
             ]
         )
